@@ -29,3 +29,7 @@ calcularTasaMetabolica.o: calcularTasaMetabolica.c
 
 mostrar_nombre.o: mostrar_nombre.c
 	gcc -c -fPIC -Wall mostrar_nombre.c
+
+clean:
+	rm -f ./obj/*.o
+	rm -f ./lib/*.so
