@@ -1,3 +1,4 @@
+#include "miLista.h"
 /*Definicion de funciones sobre la lista*/
 
 extern int Lista_Inicializar(ListaEnlazada *lista){
