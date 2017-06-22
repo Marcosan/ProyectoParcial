@@ -84,7 +84,7 @@ extern ElementoLista *Lista_Primero(ListaEnlazada *lista){
 	return lista->ancla.siguiente;
 }
 extern ElementoLista *Lista_Ultimo(ListaEnlazada *lista){
-	return lista->ancla.anterior
+	return lista->ancla.anterior;
 }
 extern ElementoLista *Lista_Siguiente(ListaEnlazada *lista, ElementoLista *elemento){
 	return 0;
