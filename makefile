@@ -14,3 +14,4 @@ pruebaLista.o: src/pruebaLista.c include/miLista.h
 
 clean: 
 	rm prueba libmilista.o pruebaLista.o lib/libmilista.so
+
