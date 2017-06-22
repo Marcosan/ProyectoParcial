@@ -1,7 +1,7 @@
 all: prueba
 
 prueba: libmilista.so -lm pruebaLista.o
-	gcc pruebaLista.o -Llib/ -lmilista -lm -o prueba
+	gcc pruebaLista.o -Llib/ -lmilista -Wl,-rpath,./lib -lm -o prueba
 
 libmilista.so: libmilista.o -lm
 	gcc -shared libmilista.o -lm -o lib/libmilista.so
