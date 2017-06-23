@@ -52,7 +52,7 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 {
 
 	int i = 0;
-//printf("%d\n", lista->numeroElementos);
+
 	ElementoLista *elem = NULL;
 	ListaEnlazada lista_tmp;
 
