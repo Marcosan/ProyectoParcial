@@ -75,7 +75,7 @@ extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
   	return 0;
 }
 extern int Lista_InsertarInicio(ListaEnlazada *lista, void *objeto){                      //se realiza lo mismo de la funcion anterior solo que ahora al principio
-	ElementoLista *nuevo_elemento = (ElementoLista*)malloc(sizeof(ElementoLista));	 
+	ElementoLista *nuevo_elemento = (ElementoLista*)malloc(sizeof(ElementoLista));
 	nuevo_elemento->objeto = objeto;
 	//strcpy(nuevo_elemento->objeto, objeto);
 	if (lista->numeroElementos == 0){
@@ -175,24 +175,24 @@ extern int Lista_InsertarAntes(ListaEnlazada *lista, void *objeto, ElementoLista
 
 /*Funciones que devuelven un elemento particular de la lista*/
 extern ElementoLista *Lista_Primero(ListaEnlazada *lista){
-	ElementoLista *tmp = &lista->ancla;
-	if (lista->numeroElementos == 0){
-		return NULL;
+	ElementoLista *tmp = &lista->ancla;					//se crea un elemento temporal y se le asigna la direccion de memoria del ancla
+	if (lista->numeroElementos == 0){     					//si la laista esta vacia
+		return NULL;							//retorna null
 	}
-	return tmp->siguiente;
+	return tmp->siguiente;							//retorna el elemento siguiente al que apunta el ancla
 }
-extern ElementoLista *Lista_Ultimo(ListaEnlazada *lista){
-	return lista->ancla.anterior;
+extern ElementoLista *Lista_Ultimo(ListaEnlazada *lista){			
+	return lista->ancla.anterior;						//retorna el elemento anterior al ancla
 }
 extern ElementoLista *Lista_Siguiente(ListaEnlazada *lista, ElementoLista *elemento){
 	if (lista->numeroElementos == 0 || elemento == NULL 
-		|| (elemento->siguiente == &lista->ancla)){
+		|| (elemento->siguiente == &lista->ancla)){			//para estos casos no existira elemento siguiente
 		return NULL;
 	}
 	return elemento->siguiente;
 }
 extern ElementoLista *Lista_Anterior(ListaEnlazada *lista, ElementoLista *elemento){
-	if (lista->numeroElementos == 0 || elemento == NULL 
+	if (lista->numeroElementos == 0 || elemento == NULL 			//para estos casos no existira elemento anterior
 		|| (elemento->anterior == &lista->ancla)){
 		return NULL;
 	}
