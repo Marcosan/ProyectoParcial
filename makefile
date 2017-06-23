@@ -13,4 +13,4 @@ pruebaLista.o: src/pruebaLista.c include/miLista.h
 	gcc -c -fPIC -g -Wall -I./include/ src/pruebaLista.c
 
 clean: 
-	rm  prueba libmilista.o pruebaLista.o lib/libmilista.so
+	rm prueba libmilista.o pruebaLista.o lib/libmilista.so
