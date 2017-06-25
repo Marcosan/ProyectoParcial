@@ -10,9 +10,18 @@ extern int Lista_Inicializar(ListaEnlazada *lista){
 	return 1;
 }
 
-extern int Lista_Vacia(ListaEnlazada *lista){ //revisar
-	if (lista->numeroElementos == 0)
+extern int Lista_Vacia(ListaEnlazada *lista){
+	//printf("esta vacia\n");
+	for(ElementoLista *it = lista->ancla.siguiente; it->objeto != NULL; it = it->siguiente){
+		free(it);
+		lista->numeroElementos--;
+	}
+	if (lista->numeroElementos == 0){
+		lista->ancla.siguiente = NULL;
+		lista->ancla.anterior = NULL;
+
 		return 1;
+	}
 	
 	return 0;
 }
@@ -27,7 +36,6 @@ extern ElementoLista *Lista_Buscar(ListaEnlazada *lista, void *objeto){
 /*Funciones de modificacion de la lista*/
 extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 	ElementoLista *nuevo_elemento = (ElementoLista*)malloc(sizeof(ElementoLista));
-	ElementoLista *actual = (ElementoLista*)malloc(sizeof(ElementoLista));
 	nuevo_elemento->objeto = objeto;
 	//printf("%d\n", nuevo_elemento->objeto);
 
@@ -38,19 +46,21 @@ extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 		lista->ancla.anterior = nuevo_elemento;
 		lista->numeroElementos++;
 	} else{
+		ElementoLista *actual = (ElementoLista*)malloc(sizeof(ElementoLista));
 		*actual = lista->ancla;
 		for (int i = 0; i <= lista->numeroElementos; i++){
-			if (actual->siguiente->objeto == NULL){
+			if (actual->siguiente == &lista->ancla){
 				actual->siguiente = nuevo_elemento;
 				nuevo_elemento->anterior = actual;
 				nuevo_elemento->siguiente = &lista->ancla;
 				lista->ancla.anterior = nuevo_elemento;
 				lista->numeroElementos++;
+				//printf("%d\n", i);
+				return 1;
 			}
 			
 			actual = actual->siguiente;
 		}
-		return 1;
 	}
 	
   	return 0;
@@ -68,6 +78,7 @@ extern int Lista_InsertarInicio(ListaEnlazada *lista, void *objeto){
 extern void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
 	elemento->anterior->siguiente = elemento->siguiente;
 	elemento->siguiente->anterior = elemento->anterior;
+	lista->numeroElementos--;
 }
 extern void Lista_SacarTodos(ListaEnlazada *lista){
 	
