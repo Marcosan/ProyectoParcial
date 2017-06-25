@@ -3,15 +3,15 @@
 /*Definicion de funciones sobre la lista*/
 
 extern int Lista_Inicializar(ListaEnlazada *lista){
-	lista = (ListEnlazada*) malloc(sizeof(ListaEnlazada)); // agregar memoria
+	lista->ancla.objeto = NULL;
 	lista->ancla.siguiente = NULL;
 	lista->ancla.anterior = NULL;
 	lista->numeroElementos = 0;
-	return 0;
+	return 1;
 }
 
 extern int Lista_Vacia(ListaEnlazada *lista){ //revisar
-	if lista->numeroElementos == 0
+	if (lista->numeroElementos == 0)
 		return 1;
 	
 	return 0;
@@ -25,28 +25,42 @@ extern ElementoLista *Lista_Buscar(ListaEnlazada *lista, void *objeto){
 }
 
 /*Funciones de modificacion de la lista*/
-extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){//me parece que te olvidas del ancla revisa la funcion de abajo
-	ElementoLista *nuevo_elemento;
-	if ((nuevo_elemento = alloc (nuevo_elemento)) == NULL)
-		return -1;
-	strcpy (nuevo_elemento->objeto, objeto);
-	nuevo_elemento->siguiente = NULL;
-	nuevo_elemento->anterior = lista->fin;
-	lista->fin->siguiente = nuevo_elemento;
-	lista->fin = nuevo_elemento;
-	lista->tamaño++;
+extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
+	ElementoLista *nuevo_elemento = (ElementoLista*)malloc(sizeof(ElementoLista));
+	ElementoLista *actual = (ElementoLista*)malloc(sizeof(ElementoLista));
+	nuevo_elemento->objeto = objeto;
+
+	if (lista->numeroElementos == 0){
+		*(nuevo_elemento->siguiente) = lista->ancla;
+		*(nuevo_elemento->anterior) = lista->ancla;
+		lista->ancla.siguiente = nuevo_elemento;
+		lista->ancla.anterior = nuevo_elemento;
+	} else{
+		*actual = lista->ancla;
+		for (int i = 0; i <= lista->numeroElementos; i++){
+			if (actual->siguiente->objeto == NULL){
+				actual->siguiente = nuevo_elemento;
+				nuevo_elemento->anterior = actual;
+				*nuevo_elemento->siguiente = lista->ancla;
+				(lista->ancla).anterior = nuevo_elemento;
+				lista->numeroElementos++;
+				return 1;
+			}
+			actual = actual->siguiente;
+		}
+		
+	}
+	
   	return 0;
 }
 extern int Lista_InsertarInicio(ListaEnlazada *lista, void *objeto){
-	ElementoLista *nuevo_elemento;
-	if ((nuevo_elemento = alloc (sizeof(nuevo_elemento))) == NULL)
-		return -1;
+	ElementoLista *nuevo_elemento = (ElementoLista*)malloc(sizeof(ElementoLista));
 	nuevo_elemento->objeto = objeto;
 	//strcpy(nuevo_elemento->objeto, objeto);
 	nuevo_elemento->anterior = &(lista->ancla);
 	nuevo_elemento->siguiente = lista->ancla.siguiente;
 	lista->ancla.siguiente = nuevo_elemento;
-  	lista->tamaño++;
+  	lista->numeroElementos++;
   	return 0;
 }
 extern void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
@@ -84,7 +98,7 @@ extern ElementoLista *Lista_Primero(ListaEnlazada *lista){
 	return lista->ancla.siguiente;
 }
 extern ElementoLista *Lista_Ultimo(ListaEnlazada *lista){
-	return lista->ancla.anterior
+	return lista->ancla.anterior;
 }
 extern ElementoLista *Lista_Siguiente(ListaEnlazada *lista, ElementoLista *elemento){
 	return 0;
